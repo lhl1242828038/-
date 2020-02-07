@@ -1,0 +1,45 @@
+#coding=utf-8
+from selenium import webdriver
+# 创建 WebDriver 对象，指明使用chrome浏览器驱动
+dr= webdriver.Chrome()
+# 调用WebDriver 对象的get方法 可以让浏览器打开指定网址
+dr.get("http://www.baidu.com")
+# 调用这个对象的send_keys方法就可以在对应的元素中 输入字符串
+# dr.find_element_by_id("kw").send_keys("selenium")
+# 调用这个对象的click方法就可以点击该元素
+# dr.find_element_by_id("su").click()
+# 如果“新闻”出现乱码，前面加个u，即把“新闻”这个字符串转成utf编码
+# 如果运行后出现SyntaxError：Non-ASCII character ‘\xe6' in file[语法错误：文件中的非ASCII字符“ \ xe6”]要在开头加  #coding=utf-8
+dr.find_element_by_link_text(u"新闻").click()
+# dr.find_element_by_xpath("//input[@id='kw']").send_keys("selenium")
+# dr.find_element_by_css_selector(".s_ipt").send_keys("selenium")
+# dr.find_element_by_css_selector("#kw").send_keys("selenium")
+# dr.find_element_by_css_selector("input[maxlength='100']").send_keys("selenium")
+
+# # 根据id选择元素，返回的就是该元素对应的WebElement对象
+# element = dr.find_element_by_id('kw')
+# # 通过该 WebElement对象，就可以对页面元素进行操作了
+# # 比如输入字符串到 这个 输入框里
+# element.send_keys('黑盒测试\n')
+
+# <input type="submit" id="su" value="百度一下" class="bg s_btn">
+# dr.find_element_by_id("su").click()
+
+# <input type="text" class="s_ipt" name="wd" id="kw" maxlength="100" autocomplete="off">
+
+# dr.find_element_by_id("kw").send_keys("selenium")
+# dr.find_element_by_name("wd").send_keys("selenium")
+# dr.find_element_by_class_name("s_ipt").send_keys("selenium")
+# 只要Xpath的属性是唯一的，XPath 是一种在 XML 文档中定位元素的语言。因为 HTML 可以看做 XML 的一种实现，所以 selenium用户可是使用这种强大语言在 web 应用中定位元素
+# dr.find_element_by_xpath("//input[@id='kw']").send_keys("selenium")
+# dr.find_element_by_xpath("//input[@name='wd']").send_keys("selenium")
+# dr.find_element_by_xpath("//input[@maxlength='100']").send_keys("selenium")
+# css选择器，CSS(Cascading Style Sheets)是一种语言，它被用来描述 HTML 和 XML 文档的表现。CSS 使用选择器来为页面元素绑定属性。这些选择器可以被 selenium 用作另外的定位策略
+# dr.find_element_by_css_selector(".s_ipt").send_keys("selenium")
+# dr.find_element_by_css_selector("#kw").send_keys("selenium")
+# dr.find_element_by_css_selector("input[maxlength='100']").send_keys("selenium")
+
+# <a href="http://news.baidu.com" target="_blank" class="mnav">新闻</a>
+
+# dr.find_element_by_link_text("新闻").click()
+# dr.find_element_by_partial_link_text("新").click()
