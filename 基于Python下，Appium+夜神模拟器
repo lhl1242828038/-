@@ -17,6 +17,7 @@
 #可能出现错误：RemoteDisconnected("Remote end closed connection without" urllib3.exceptions.ProtocolError，可在localhost跳转前加上time.sleep(5)
 #元素定位方法：优先使用find_element_by_id、find_element_by_accessibility_id、find_element_by_xpath的方法
 #该版本直接在pycharm上运行即可，不需要打开Appium软件，不需要启动Appium服务器，代码中不使用显式等待
+#cmd命令下，连接夜神模拟器，输入adb connect 127.0.0.1:62001，通过adb devices查询是否已连接
 from appium import webdriver
 #from time import sleep
 import time
