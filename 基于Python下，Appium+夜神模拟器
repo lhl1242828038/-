@@ -1,0 +1,76 @@
+#系统环境：win7、32位系统
+#一、所需软件及安装配置
+#所用到的软件如下：
+#1、JDK： jdk-8u74-windows-x86.exe
+#2、Python: python-3.8.exe
+#3、Pycharm： pycharm-professional-2018.3.7.exe
+#4、安卓SDK： android-sdk_r24.4.1-windows
+#5、Node.js： node-v10.16.0-x32.msi
+#6、appium: Appium-windows-1.10.0-32
+#7、Appium-python-Client版本：0.40，python与appium关联起来，注：webdriver版本和appium的版本一致，输入pip show ppium-python-Client查询
+#8、夜神模拟器：nox_setup_v6.6.0.2_full.exe，夜神模拟器名字：127.0.0.1:62001，Android系统版本5.1.1，手机QQ
+#9、elenium版本：3.141.0，cmd命令下，输入pip show selenium查询
+#注意事项：Appium录制的脚本直接复制过来Pycharm使用，需安装的库：Appium-Python-Client，有时候定位不到参数，可能是页面还未缓存过来，导致定位不到，需要添加等待待时间
+#隐式等待：driver.implicitly_wait(10)，  固定等待：需导入import time模块，然后设置time.sleep(2)
+#显式等待：WebDriverWait()会配合until()和until_not()方法一起使用，需要导入from selenium.webdriver.support.ui import WebDriverWait模块
+#可能出现错误：'selenium.common.exceptions.TimeoutException: Message: '错误，显示等待的错误
+#可能出现错误：RemoteDisconnected("Remote end closed connection without" urllib3.exceptions.ProtocolError，可在localhost跳转前加上time.sleep(5)
+#元素定位方法：优先使用find_element_by_id、find_element_by_accessibility_id、find_element_by_xpath的方法
+#该版本直接在pycharm上运行即可，不需要打开Appium软件，不需要启动Appium服务器，代码中不使用显式等待
+from appium import webdriver
+#from time import sleep
+import time
+import os
+#from selenium.webdriver.support.ui import WebDriverWait
+#启动appium server的命令
+start_appium = os.system(r'start /b appium -a 127.0.0.1 -p 4723')
+time.sleep(2)
+print('Appium启动')
+#配置Desired_Capabilities
+desired_caps = {}
+desired_caps["platformName"] = "Android"
+desired_caps["platformVersion"] = "5.1.1"
+desired_caps["deviceName"] = "127.0.0.1:62001"
+desired_caps["appPackage"] = "com.tencent.mobileqq"
+desired_caps["appActivity"] = ".activity.SplashActivity"
+desired_caps["noReset"] = "true"
+#将Desired_Capabilities传入Appium中,localhost:4723/wd/hub为appium服务端地址
+print('属性配置')
+#time.sleep(5)
+driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
+#隐式等待：所谓的隐性的等待就是我们设置了一个等待时间范围，这个等待的时间是不固定的，最长的等待也莫过于我们设置的最大值。这里主要采用 implicitly_wait(10)方法来设置等待时间，这里要比time.sleep(10)更加智能一些。
+driver.implicitly_wait(10)
+print('启动服务')
+#显式等待：WebDriverWait()会配合until()和until_not()方法一起使用，根据判断条件而进行灵活进行处理时间等待问题，他会不断的根据你设定的条件去判断，直到超过你设置的等待时间，如果设置的条件满足，然后进行下一步操作，如果没有满足会报一个'selenium.common.exceptions.TimeoutException: Message: '错误，使用WebDriverWait首先需要导入from selenium.webdriver.support.ui import WebDriverWait模块
+#WebDriverWait(driver,20).until(lambda driver:driver.find_element_by_id('com.tencent.mobileqq:id/dialogRightBtn')).click()
+#driver.find_element_by_id('com.tencent.mobileqq:id/dialogRightBtn').click()
+time.sleep(5)
+#操作APP中的元素，实现自动化运行
+#登录按钮
+driver.find_element_by_xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.LinearLayout/android.widget.Button[2]').click()
+#driver.find_element_by_id("com.tencent.mobileqq:id/btn_login").click()
+driver.implicitly_wait(10)
+driver.find_element_by_xpath('//android.widget.EditText[@content-desc="请输入QQ号码或手机或邮箱"]').click()
+driver.find_element_by_xpath('//android.widget.EditText[@content-desc="请输入QQ号码或手机或邮箱"]').send_keys("1242803897")
+#driver.find_element_by_accessibility_id("请输入QQ号码或手机或邮箱").click()
+#driver.find_element_by_accessibility_id("请输入QQ号码或手机或邮箱").send_keys("1242803897")
+driver.implicitly_wait(2)
+driver.find_element_by_xpath('//android.widget.EditText[@content-desc="密码 安全"]').send_keys("12rt")
+#driver.find_element_by_accessibility_id("密码 安全").send_keys("12rt")
+#driver.find_element_by_id("com.tencent.mobileqq:id/password").send_keys("12rt")
+driver.implicitly_wait(2)
+driver.find_element_by_xpath('//android.widget.ImageView[@content-desc="登 录"]').click()
+#driver.find_element_by_accessibility_id("登 录").click()
+#driver.find_element_by_id("com.tencent.mobileqq:id/login").click()
+print('脚本执行结束')
+#有滑动按钮的话，需导入滑动的模块：from appium.webdriver.common.touch_action import TouchAction，滑动前一般设置等待时间，待页面缓存过来，再滑动
+#time.sleep(2)
+#TouchAction=(driver).press(x=387,y=1231).move_to(x=425,y=152).release().perform()
+#运行结果：
+#ϵͳ�Ҳ����ļ� appium��
+#Appium启动
+#属性配置
+#启动服务
+#脚本执行结束
+
+#Process finished with exit code 0
