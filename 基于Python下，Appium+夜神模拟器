@@ -16,7 +16,7 @@
 #可能出现错误：'selenium.common.exceptions.TimeoutException: Message: '错误，显示等待的错误
 #可能出现错误：RemoteDisconnected("Remote end closed connection without" urllib3.exceptions.ProtocolError，可在localhost跳转前加上time.sleep(5)
 #元素定位方法：优先使用find_element_by_id、find_element_by_accessibility_id、find_element_by_xpath的方法
-#该版本直接在pycharm上运行即可，不需要打开Appium软件，不需要启动Appium服务器，代码中不使用显式等待
+#该版本直接在pycharm上运行即可，打开Appium软件，启动Appium服务器，代码中不使用显式等待，使用夜神模拟器，打开夜神模拟器，cmd命令需输入adb connect127.0.00.1:62001
 #cmd命令下，连接夜神模拟器，输入adb connect 127.0.0.1:62001，通过adb devices查询是否已连接
 from appium import webdriver
 #from time import sleep
@@ -43,8 +43,6 @@ driver = webdriver.Remote("http://localhost:4723/wd/hub", desired_caps)
 driver.implicitly_wait(10)
 print('启动服务')
 #显式等待：WebDriverWait()会配合until()和until_not()方法一起使用，根据判断条件而进行灵活进行处理时间等待问题，他会不断的根据你设定的条件去判断，直到超过你设置的等待时间，如果设置的条件满足，然后进行下一步操作，如果没有满足会报一个'selenium.common.exceptions.TimeoutException: Message: '错误，使用WebDriverWait首先需要导入from selenium.webdriver.support.ui import WebDriverWait模块
-#WebDriverWait(driver,20).until(lambda driver:driver.find_element_by_id('com.tencent.mobileqq:id/dialogRightBtn')).click()
-#driver.find_element_by_id('com.tencent.mobileqq:id/dialogRightBtn').click()
 time.sleep(5)
 #操作APP中的元素，实现自动化运行
 #登录按钮
@@ -63,6 +61,9 @@ driver.implicitly_wait(2)
 driver.find_element_by_xpath('//android.widget.ImageView[@content-desc="登 录"]').click()
 #driver.find_element_by_accessibility_id("登 录").click()
 #driver.find_element_by_id("com.tencent.mobileqq:id/login").click()
+#qq的服务协议和隐私政策的点击同意的步骤
+#WebDriverWait(driver,20).until(lambda driver:driver.find_element_by_id('com.tencent.mobileqq:id/dialogRightBtn')).click()
+#driver.find_element_by_id('com.tencent.mobileqq:id/dialogRightBtn').click()
 print('脚本执行结束')
 #有滑动按钮的话，需导入滑动的模块：from appium.webdriver.common.touch_action import TouchAction，滑动前一般设置等待时间，待页面缓存过来，再滑动
 #time.sleep(2)
